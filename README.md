@@ -1,4 +1,4 @@
-This is a sample starter django application for prismic.
+This is a starter django application for prismic.
 
 Configuration
 -------------
