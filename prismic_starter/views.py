@@ -1,12 +1,18 @@
 from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
+from django.core.urlresolvers import reverse
 import prismic
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+def link_resolver(document_link):
+    #return reverse("prismic:document",args=document_link.id)
+    return "/document/%s" % document_link.id
 
 def prismic_api():
-    api = prismic.get(
-        settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
+    api = prismic.get(settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
     return api
 
 
@@ -30,4 +36,5 @@ def index(request):
 
 def detail(request, id, slug):
     document = get_document(id)
-    return render(request, 'prismic_starter/detail.html', {'document': document})
+    document_html = document.as_html(link_resolver)
+    return render(request, 'prismic_starter/detail.html', {'document': document, 'document_html': document_html})

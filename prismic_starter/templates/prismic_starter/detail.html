@@ -1,5 +1,5 @@
 Document detail {{ document.slug }}
 
     <article id="{{ document.id }}">
-      {{ document.fragments }}
+      {{ document_html|safe }}
     </article>
