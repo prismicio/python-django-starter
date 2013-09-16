@@ -1,5 +1,7 @@
+{% load as_html %}
+
 Document detail {{ document.slug }}
 
     <article id="{{ document.id }}">
-      {{ document_html|safe }}
+      {{ document|as_html:context.link_resolver }}
     </article>
