@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from prismic_starter import views
+from prismic_app import views
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),

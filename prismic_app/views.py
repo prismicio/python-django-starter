@@ -23,11 +23,14 @@ def index(request):
     form = prismic.form("everything")
     documents = form.submit()
     parameters = {'documents': documents, 'context': prismic.get_context()}
-    return render(request, 'prismic_starter/index.html', parameters)
+    return render(request, 'prismic_app/index.html', parameters)
 
 def detail(request, id, slug):
     prismic = Prismic_Helper()
 
     document = prismic.get_document(id)
+    context = prismic.get_context()
+    # context.link_resolver
+    #print "context.link_resolver: %s" % context.link_resolver
     parameters = {'document': document, 'context': prismic.get_context() }
-    return render(request, 'prismic_starter/detail.html', parameters)
+    return render(request, 'prismic_app/detail.html', parameters)
