@@ -148,7 +148,7 @@ LOGGING = {
 
 PRISMIC = {
     # API endpoint
-    "api": "http://lesbonneschoses.prismic.io/api",
+    "api": "https://lesbonneschoses.prismic.io/api",
     # If specified this token is used for all "guest" requests
     "token": "MC5VZ2phOGRfbXFaOEl2UEpj.dO-_ve-_ve-_ve-_vSFRBzXvv71V77-977-9BO-_vVbvv71k77-9Cu-_ve-_vQTvv71177-9eQpcUE3vv70"
 }

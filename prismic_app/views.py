@@ -1,11 +1,7 @@
-from django.http import HttpResponse, Http404
-from django.conf import settings
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from prismic_shortcuts import Prismic_Helper
-import logging
+from prismic_helper import PrismicHelper
 
-logging.basicConfig(level=logging.DEBUG)
 
 def link_resolver(document_link):
     """
@@ -14,23 +10,23 @@ def link_resolver(document_link):
     document_link -- Fragment.DocumentLink object
     """
 
-    #return reverse("prismic:document",args=document_link.id)
-    return "/document/%s" % document_link.id
+    return reverse('prismic:document', kwargs={'id': document_link.get_document_id(), 'slug': document_link.get_document_slug()})
+
 
 def index(request):
-    prismic = Prismic_Helper()
+    prismic = PrismicHelper()
 
     form = prismic.form("everything")
     documents = form.submit()
+
     parameters = {'documents': documents, 'context': prismic.get_context()}
     return render(request, 'prismic_app/index.html', parameters)
 
+
 def detail(request, id, slug):
-    prismic = Prismic_Helper()
+    prismic = PrismicHelper()
 
     document = prismic.get_document(id)
-    context = prismic.get_context()
-    # context.link_resolver
-    #print "context.link_resolver: %s" % context.link_resolver
-    parameters = {'document': document, 'context': prismic.get_context() }
+
+    parameters = {'context': prismic.get_context(), 'document': document}
     return render(request, 'prismic_app/detail.html', parameters)
