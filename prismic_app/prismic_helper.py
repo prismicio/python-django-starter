@@ -37,4 +37,4 @@ class PrismicHelper(object):
 
     def get_bookmark(self, bookmark_id):
         bookmark = self.api.bookmarks[bookmark_id]
-        return self.get_document(self.everything_form_name, bookmark)
+        return self.get_document(bookmark, self.everything_form_name)
