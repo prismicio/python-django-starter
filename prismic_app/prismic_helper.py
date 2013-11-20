@@ -19,7 +19,7 @@ class PrismicHelper(object):
 
     def form(self, name):
         form = self.api.form(name)
-        form.ref(id=self.ref)
+        form.ref(self.ref)
         return form
 
     def get_document(self, document_id, form_name="everything"):
