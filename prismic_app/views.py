@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from prismic_helper import PrismicHelper
+#import logging
 
+#logging.basicConfig(level=logging.DEBUG)
+#log = logging.getLogger(__name__)
 
 def link_resolver(document_link):
     """
