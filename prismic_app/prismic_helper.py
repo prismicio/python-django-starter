@@ -2,17 +2,16 @@ import prismic
 import views
 from django.conf import settings
 from django.http import Http404
-from django import template
+
 
 class PrismicHelper(object):
 
     def __init__(self, ref_id=None):
-        self.api = prismic.get(
-            settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
+        self.api = prismic.get(settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
         self.link_resolver = views.link_resolver
         self.everything_form_name = "everything"
 
-        if ref_id != None:
+        if ref_id is not None:
             self.ref = ref_id
         else:
             self.ref = self.api.get_master()

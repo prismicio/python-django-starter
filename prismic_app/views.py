@@ -20,7 +20,7 @@ def index(request):
     prismic = PrismicHelper()
 
     form = prismic.form("everything")
-    documents = form.submit()
+    documents = form.submit().documents
 
     parameters = {'documents': documents, 'context': prismic.get_context()}
     return render(request, 'prismic_app/index.html', parameters)
