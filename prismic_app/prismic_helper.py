@@ -1,5 +1,6 @@
 import prismic
 import views
+from prismic import predicates
 from django.conf import settings
 from django.http import Http404
 
@@ -7,7 +8,8 @@ from django.http import Http404
 class PrismicHelper(object):
 
     def __init__(self, ref_id=None):
-        self.api = prismic.get(settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
+        self.api = prismic.get(
+            settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
         self.link_resolver = views.link_resolver
         self.everything_form_name = "everything"
 
@@ -21,10 +23,16 @@ class PrismicHelper(object):
         form.ref(self.ref)
         return form
 
+    def get_documents(self, document_ids, form_name="everything"):
+        form = self.form(form_name)
+        ids = ",".join(map(lambda i: "\"%s\"" % i, document_ids))
+        form.query(predicates.any("document.id", ids))
+        return form.submit().documents
+
     def get_document(self, document_id, form_name="everything"):
         form = self.form(form_name)
-        form.query(r"""[[:d = at(document.id, "%s")]]""" % document_id)
-        document = form.submit()
+        form.query(predicates.at("document.id", document_id))
+        document = form.submit().documents
         if document:
             return document[0]
         else:
