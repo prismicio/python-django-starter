@@ -7,14 +7,17 @@ from django.http import Http404
 
 class PrismicHelper(object):
 
-    def __init__(self, ref_id=None):
+    def __init__(self, request, ref_id=None):
         self.api = prismic.get(
             settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
         self.link_resolver = views.link_resolver
         self.everything_form_name = "everything"
-
+        self.google_id = self.api.experiments.current()
+        cookie_ref = request.COOKIES.get(prismic.EXPERIMENTS_COOKIE)
         if ref_id is not None:
             self.ref = ref_id
+        elif cookie_ref is not None:
+            self.ref = cookie_ref
         else:
             self.ref = self.api.get_master()
 
@@ -40,7 +43,7 @@ class PrismicHelper(object):
 
     def get_context(self):
         """Add context to the view dictionary"""
-        return {"ref": self.ref, "link_resolver": self.link_resolver}
+        return {"ref": self.ref, "link_resolver": self.link_resolver, "google_id": self.google_id}
 
     def get_bookmark(self, bookmark_id):
         bookmark = self.api.bookmarks[bookmark_id]

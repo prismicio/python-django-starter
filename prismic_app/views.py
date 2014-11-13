@@ -17,7 +17,7 @@ def link_resolver(document_link):
 
 
 def index(request):
-    prismic = PrismicHelper()
+    prismic = PrismicHelper(request)
 
     form = prismic.form("everything")
     documents = form.submit().documents
@@ -27,7 +27,7 @@ def index(request):
 
 
 def detail(request, id, slug):
-    prismic = PrismicHelper()
+    prismic = PrismicHelper(request)
 
     document = prismic.get_document(id)
 

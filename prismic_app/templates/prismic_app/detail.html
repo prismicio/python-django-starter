@@ -1,7 +1,11 @@
+{% extends 'prismic_app/base.html' %}
+
 {% load prismic_tags %}
 
+{% block content %}
 Document detail {{ document.slug }}
 
     <article id="{{ document.id }}">
       {% as_html document %}
     </article>
+{% endblock %}

@@ -1,11 +1,15 @@
-{% if documents %}
-    <ul>
-    {% for document in documents %}
-        <li>
-          <a href="{% url 'prismic:document' id=document.id slug=document.slug %}">
-            {{ document.slug }}
-          </a>
-        </li>
-	{% endfor %}
-    </ul>
-{% endif %}
+{% extends 'prismic_app/base.html' %}
+
+{% block content %}
+    {% if documents %}
+        <ul>
+            {% for document in documents %}
+                <li>
+                    <a href="{% url 'prismic:document' id=document.id slug=document.slug %}">
+                        {{ document.slug }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
