@@ -13,7 +13,7 @@ class PrismicHelper(object):
         self.link_resolver = views.link_resolver
         self.everything_form_name = "everything"
         self.google_id = self.api.experiments.current()
-        cookie_ref = request.COOKIES.get(prismic.EXPERIMENTS_COOKIE)
+        cookie_ref = self.api.experiments.ref_from_cookie(request.COOKIES.get(prismic.EXPERIMENTS_COOKIE))
         if ref_id is not None:
             self.ref = ref_id
         elif cookie_ref is not None:
