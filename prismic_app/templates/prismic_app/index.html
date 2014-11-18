@@ -1,7 +1,27 @@
 {% extends 'prismic_app/base.html' %}
 
 {% block content %}
+
+    <form action="/search" method="GET">
+        <input type="text" name="q" value="">
+        <input type="submit" value="Search">
+    </form>
+    <hr />
+
     {% if documents %}
+        <h2>
+            {{ documents.total_results_size }}
+            {% if documents.total_results_size == 0 %}
+            No document found
+            {%  endif %}
+            {% if documents.total_results_size == 1 %}
+            One document found
+            {%  endif %}
+            {% if documents.total_results_size > 1 %}
+            {{ documents.total_results_size }} documents found
+            {%  endif %}
+        </h2>
+
         <ul>
             {% for document in documents %}
                 <li>

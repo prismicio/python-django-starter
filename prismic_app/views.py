@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.http import Http404
+
 from prismic_helper import PrismicHelper
+from prismic import PREVIEW_COOKIE
+
 #import logging
 
 #logging.basicConfig(level=logging.DEBUG)
@@ -33,3 +37,18 @@ def detail(request, id, slug):
 
     parameters = {'context': prismic.get_context(), 'document': document}
     return render(request, 'prismic_app/detail.html', parameters)
+
+
+def preview(request):
+    prismic = PrismicHelper(request)
+
+    token = request.GET.get('token')
+
+    if token is None:
+        raise Http404
+
+    url = prismic.api.preview_session(token, prismic.link_resolver, '/')
+
+    response = redirect(url)
+    response.set_cookie(PREVIEW_COOKIE, token, max_age=1800, httponly=False)
+    return response
