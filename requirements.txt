@@ -1,2 +1,2 @@
 Django==1.5.4
-prismic==1.1.0
+prismic==1.2.0
