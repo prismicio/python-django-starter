@@ -14,6 +14,11 @@
 
 {% block content %}{% endblock %}
 
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+  window.prismic = { endpoint: '{{ context.endpoint }}' };
+</script>
+
 {# This file is required for Experiments and Previews. #}
 <script src="//static.cdn.prismic.io/prismic.min.js"></script>
 {# Uncomment the line below to activate experiments #}

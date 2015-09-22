@@ -8,8 +8,8 @@ from django.http import Http404
 class PrismicHelper(object):
 
     def __init__(self, request):
-        self.api = prismic.get(
-            settings.PRISMIC.get("api"), settings.PRISMIC.get("token"))
+        self.endpoint = settings.PRISMIC.get("api")
+        self.api = prismic.get(self.endpoint, settings.PRISMIC.get("token"))
         self.link_resolver = views.link_resolver
         self.everything_form_name = "everything"
         self.google_id = self.api.experiments.current()
@@ -44,7 +44,12 @@ class PrismicHelper(object):
 
     def get_context(self):
         """Add context to the view dictionary"""
-        return {"ref": self.ref, "link_resolver": self.link_resolver, "google_id": self.google_id}
+        return {
+            "endpoint": self.endpoint,
+            "ref": self.ref,
+            "link_resolver": self.link_resolver,
+            "google_id": self.google_id
+        }
 
     def get_bookmark(self, bookmark_id):
         bookmark = self.api.bookmarks[bookmark_id]
